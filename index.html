@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+<title>Qt/OC <--> Js Communication</title>
+<script>
+    function sendJsMessageToObjectiveC(msg) {
+        window.webkit.messageHandlers.customMessageHandler.postMessage(msg);
+    }
+
+    function recvMessageFromObjectiveC(msg) {
+        alert("Message From OC/Qt '" + msg + "'");
+    }
+
+    function onMakeNotification() {
+        sendJsMessageToObjectiveC('{"category":"myProject", "type": "tip", "body":"Hello OC/Qt, i\'m js"}');
+    }
+
+</script>
+</head>
+<body style='text-align:center;'>
+    <h3>Click the button to send a notification</h3>
+
+    <button onclick='onMakeNotification()'>Notify!</button>
+</body>
+</html>
