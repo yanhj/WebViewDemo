@@ -8,11 +8,15 @@
     }
 
     function recvMessageFromObjectiveC(msg) {
-        alert("Message From OC/Qt '" + msg + "'");
+        displayTip(msg);
     }
-
+    function displayTip(msg) {
+        document.getElementById("display").innerHTML = msg;
+    }
     function onMakeNotification() {
-        sendJsMessageToObjectiveC('{"category":"myProject", "type": "tip", "body":"Hello OC/Qt, i\'m js"}');
+        jsonText = '{"category":"myProject", "type": "tip", "body":"Hello OC/Qt, i\'m js"}'
+        sendJsMessageToObjectiveC(jsonText);
+        displayTip(jsonText);
     }
 
 </script>
@@ -21,5 +25,8 @@
     <h3>Click the button to send a notification</h3>
 
     <button onclick='onMakeNotification()'>Notify!</button>
+    <div>
+        <output id="display">aSsaS</output>
+    </div>
 </body>
 </html>
