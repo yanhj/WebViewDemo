@@ -293,7 +293,7 @@ typedef void(^MyProjectNavigationDelegateCallback)(STNavigationError);
     if(@available(iOS 11.0, *)) {
         [self->pWebView.configuration.userContentController removeAllScriptMessageHandlers];
     } else {
-        [self->pWebView.configuration.userContentController removeScriptMessageHandlerForName:@"myProjectInterface"];
+        [self->pWebView.configuration.userContentController removeScriptMessageHandlerForName:@"customMessageHandler"];
     }
     [super dealloc];
 }
@@ -312,10 +312,16 @@ typedef void(^MyProjectNavigationDelegateCallback)(STNavigationError);
     }
 }
 
--(void) sendMessage: (NSString*) message {
-    if(nil != message) {
-        NSLog(message);
-        [self->pWebView evaluateJavaScript:message  completionHandler:nil];
+-(void) sendMessage: (NSString*) apiName msg:(NSString*) message {
+    if(nil != apiName
+       && nil != message
+       && apiName.length > 0) {
+        NSString* str = [NSMutableString stringWithString:apiName];
+        [str appendString:@"(\""];
+        [str appendString:message];
+        [str appendString:@"\")"];
+        NSLog(str);
+        [self->pWebView evaluateJavaScript:str  completionHandler:nil];
     }
 }
 

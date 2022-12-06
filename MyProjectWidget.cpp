@@ -34,7 +34,7 @@ MyProjectWidget::MyProjectWidget(QWidget *parent)
         }
     }
     connect(ui->btnToJs, &QPushButton::clicked, this, [=] {
-        [webView sendMessage: QString("recvMessageFromObjectiveC(\"msg from Qt/Oc\")").toNSString()];
+        [webView sendMessage: QString("recvMessageFromObjectiveC").toNSString() msg:QString("msg from Qt/Oc").toNSString()];
     });
 }
 
