@@ -1,8 +1,6 @@
 #import "MyWebView.h"
 
 @interface MyWebView () {
-@public
-    WKWebView *pWebView;
 }
 @end
 

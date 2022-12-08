@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <QtWidgets/QWidget>
+#include <QtWidgets/QDialog>
 #include "CustomOCWebView.h"
 #include "IMessageHandler.h"
 
@@ -16,7 +16,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MyProjectWidget; }
 QT_END_NAMESPACE
 
-class MyProjectWidget : public QWidget, public IMessageHandler {
+class MyProjectWidget : public QDialog, public IMessageHandler {
     Q_OBJECT
 
 public:

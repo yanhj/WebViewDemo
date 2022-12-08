@@ -2,5 +2,7 @@
 #import <Foundation/Foundation.h>
 
 @interface MyWebView : NSObject {
+@public
+    WKWebView *pWebView;
 }
 @end

@@ -4,11 +4,11 @@
 #include <QtCore/QString>
 #include <QtGui/QWindow>
 #include "MyProjectWidget.h"
-
+#include "mainwindow.h"
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-    MyProjectWidget w(nullptr);
+    MainWindow w(nullptr);
     w.show();
 
     return app.exec();

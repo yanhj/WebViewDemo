@@ -18,7 +18,7 @@
 #include <QtWidgets/QMessageBox>
 
 MyProjectWidget::MyProjectWidget(QWidget *parent)
-: QWidget(parent)
+: QDialog(parent)
 , IMessageHandler()
 , ui(new Ui::MyProjectWidget) {
     ui->setupUi(this);
