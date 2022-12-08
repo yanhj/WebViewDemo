@@ -279,7 +279,6 @@ typedef void(^MyProjectNavigationDelegateCallback)(STNavigationError);
         self->pWebView.allowsMagnification = false;
         NSString *oriUA = [self->pWebView valueForKey: [NSString stringWithCString:"userAgent"]];
         self->pWebView.customUserAgent = [ [NSString alloc] initWithFormat:@"%@ %@",oriUA, QString("123TODO").toNSString()];
-        [oriUA release];
         [self->pWebView.configuration.userContentController addScriptMessageHandler:self name:@"customMessageHandler"];
         [self->pWebView evaluateJavaScript:@"document.documentElement.style.webkitUserSelect='none';"  completionHandler:nil];
         [self->pWebView evaluateJavaScript:@"document.documentElement.style.webkitTouchCallout='none';" completionHandler:nil];
