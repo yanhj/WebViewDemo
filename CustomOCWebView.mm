@@ -236,7 +236,6 @@ typedef void(^MyProjectNavigationDelegateCallback)(STNavigationError);
 @property (nonatomic, assign, readwrite) NSString* strUrl;
 @property (nonatomic, assign, setter=setMessageHandler:) MessageHandlerService* messageHandler;
 ///- 对象方法
--(void) loadUrl;
 -(void) setNavigationDelegateCallback: (MyProjectNavigationDelegateCallback) callback;
 ///+ 类方法
 +(void) clearCookie;
@@ -275,9 +274,10 @@ typedef void(^MyProjectNavigationDelegateCallback)(STNavigationError);
 
         pWebView.navigationDelegate = pNavigationDelegate;
         self->pWebView.configuration.preferences.javaScriptEnabled = true;
+        self->pWebView.configuration.defaultWebpagePreferences.allowsContentJavaScript = true;
         self->pWebView.allowsBackForwardNavigationGestures = false;
         self->pWebView.allowsMagnification = false;
-        NSString *oriUA = [self->pWebView valueForKey: [NSString stringWithCString:"userAgent"]];
+        NSString *oriUA = [self->pWebView valueForKey: [NSString stringWithCString:"userAgent" encoding:NSUTF8StringEncoding]];
         self->pWebView.customUserAgent = [ [NSString alloc] initWithFormat:@"%@ %@",oriUA, QString("123TODO").toNSString()];
         [self->pWebView.configuration.userContentController addScriptMessageHandler:self name:@"customMessageHandler"];
         [self->pWebView evaluateJavaScript:@"document.documentElement.style.webkitUserSelect='none';"  completionHandler:nil];
@@ -316,10 +316,9 @@ typedef void(^MyProjectNavigationDelegateCallback)(STNavigationError);
        && nil != message
        && apiName.length > 0) {
         NSString* str = [NSMutableString stringWithString:apiName];
-        [str appendString:@"(\""];
-        [str appendString:message];
-        [str appendString:@"\")"];
-        NSLog(str);
+        [str stringByAppendingString:@"(\""];
+        [str stringByAppendingString:message];
+        [str stringByAppendingString:@"\")"];
         [self->pWebView evaluateJavaScript:str  completionHandler:nil];
     }
 }
@@ -350,6 +349,13 @@ typedef void(^MyProjectNavigationDelegateCallback)(STNavigationError);
     NSURL* url = [NSURL fileURLWithPath:self.strUrl];
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     [pWebView loadRequest:request];
+}
+
+// 进程被终止时调用
+- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
+    if (webView != self->pWebView)
+        return;
+    NSLog(@"----------进程被终止时调用");
 }
 
 //遵循WKScriptMessageHandler协议，必须实现如下方法，然后把方法向外传递

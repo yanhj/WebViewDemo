@@ -12,9 +12,16 @@
 #import <Foundation/Foundation.h>
 #include <WebKit/WKWebView.h>
 
+class MessageHandlerService;
+
 @interface CustomOCWebView : NSObject<WKUIDelegate, WKScriptMessageHandler> {
 @public
     WKWebView *pWebView;
 }
+
+-(void)loadUrl;
+-(void) setUrl: (NSString*)strUrl;
+-(void) setMessageHandler: (MessageHandlerService*) messageHandler;
+-(void) sendMessage: (NSString*) apiName msg:(NSString*) message;
 @end
 
